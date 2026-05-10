@@ -1246,10 +1246,10 @@
     .carousel-scene .card:hover                    { transform: none; }
     .carousel-scene .carousel-item.c-active .card:hover { transform: scale(1.02); }
 
-    /* ── CAROUSEL : contenu de carte réduit pour tenir dans la hauteur ── */
-    .carousel-scene .card {
-      padding: 1.35rem 1.4rem 40px 1.4rem;
-      height: 100%;
+    /* ── CAROUSEL : mise en forme interne commune à toutes les cartes ── */
+    .carousel-scene .carousel-item {
+      /* top=1.35rem  |  côtés=1.4rem  |  bas=35px (uniforme → bouton toujours au même niveau) */
+      padding: 1.35rem 1.4rem 35px;
       box-sizing: border-box;
     }
     .carousel-scene .card-num   { margin-bottom: 0.45rem; }
@@ -1258,48 +1258,22 @@
     .carousel-scene .card-desc  { font-size: 0.82rem; line-height: 1.58; }
     .carousel-scene .card-tools { margin-top: 0.75rem; }
     .carousel-scene .card-footer{ margin-top: 0.9rem; padding-top: 0.7rem; }
-    .carousel-scene .btn-more   { margin-bottom: 20px; }
+    /* Marge de sécurité interne au bouton — évite qu'il touche le bord bas */
+    .carousel-scene .btn-more   { margin-bottom: 6px; }
 
-    /* Projet IA (data-index="3") : description légèrement plus compacte
-       pour libérer de l'espace et faire remonter le bouton                */
+    /* Projet IA [3] : description plus compacte car plus de texte */
     .carousel-scene .carousel-item[data-index="3"] .card-desc {
       font-size: 0.77rem;
       line-height: 1.52;
     }
 
-    /* Padding-bottom par carte — surcharge la valeur globale de 40px
-       pour coller le bouton au bas selon la densité de contenu              */
-    .carousel-scene .carousel-item[data-index="2"] .card { padding-bottom: 20px; }
-    .carousel-scene .carousel-item[data-index="4"] .card { padding-bottom: 200px; background-color: red; }
+    /* Spectromètre [2] et Radio [4] : padding-bottom réduit car moins de contenu
+       (avec flex: 1 sur card-desc, le bouton serait sinon trop haut dans la carte) */
+    .carousel-scene .carousel-item[data-index="2"] { padding-bottom: 22px; }
+    .carousel-scene .carousel-item[data-index="4"] { padding-bottom: 18px; }
 
-    /* Projets légers (peu de contenu) — on gonfle visuellement pour aligner
-       le bouton 'EN SAVOIR PLUS' au même niveau que la carte IA             */
-    .carousel-scene .carousel-item[data-index="0"] .card-desc,
-    .carousel-scene .carousel-item[data-index="2"] .card-desc,
-    .carousel-scene .carousel-item[data-index="4"] .card-desc {
-      line-height: 1.7;
-    }
-    .carousel-scene .carousel-item[data-index="0"] .card-title,
-    .carousel-scene .carousel-item[data-index="2"] .card-title,
-    .carousel-scene .carousel-item[data-index="4"] .card-title {
-      margin-top: 20px;
-    }
-    .carousel-scene .carousel-item[data-index="0"] .card-tools,
-    .carousel-scene .carousel-item[data-index="2"] .card-tools,
-    .carousel-scene .carousel-item[data-index="4"] .card-tools {
-      margin-bottom: 1.1rem;
-    }
-
-    /* Léger scale sur la carte active (appliqué au .card enfant,
-       pas au .carousel-item pour ne pas perturber le transform 3D du track) */
-    .carousel-scene .carousel-item.c-active .card {
-      transform: scale(1.02);
-      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
-    }
-    .carousel-scene .carousel-item:not(.c-active) .card {
-      transform: scale(1);
-      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
-    }
+    /* Scale c-active : impossible via CSS (le JS pose style.transform en inline qui gagne).
+       La distinction visuelle est assurée par la bordure holographique + la box-shadow. */
 
     /* ════════════════════════════════════════════════════════════════
        ÉTAPE 4 — EFFETS VISUELS CAROUSEL
